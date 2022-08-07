@@ -6,6 +6,7 @@ import logo from "./logo.svg"
 
 import Cash from "./components/cash.js"
 import CreateProduct from "./components/create-product.js"
+import ProductList from "./components/product-list";
 import Credit from "./components/credit.js"
 import Customer from "./components/customer.js"
 import Inventory from "./components/inventory.js"
@@ -29,6 +30,9 @@ class App extends Component {
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
                   <Link to="/create" className="nav-link">Create Product</Link>
+                </li>
+                <li className="navbar-item">
+                  <Link to="/list" className="nav-link">Product List</Link>
                 </li>
                 <li className="navbar-item">
                   <Link to="/recieving" className="nav-link">Recieving</Link>
@@ -61,6 +65,7 @@ class App extends Component {
             </div>
           </nav>
           <Route path="/create" component={CreateProduct}/>
+          <Route path="/list" component={ProductList}/>
           <Route path="/recieving" component={Recieving}/>
           <Route path="/sales" component={Sales}/>
           <Route path="/cash" component={Cash}/>
