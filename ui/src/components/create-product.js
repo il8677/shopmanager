@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import config from "../config.json"
+import axios from "axios"
+
 export default class CreateProduct extends Component {
     resetState(){
         this.state = {
@@ -7,16 +10,18 @@ export default class CreateProduct extends Component {
             cost: 0,
             expiraton: Date.now()
         }
-
-        this.onChangeRetail = this.onChangeRetail.bind(this);
-        this.onChangeCost = this.onChangeCost.bind(this);
-        this.onChangeExpiration = this.onChangeExpiration.bind(this);
     }
 
     constructor(props) {
         super(props);
 
         this.resetState();
+
+        this.onChangeRetail = this.onChangeRetail.bind(this);
+        this.onChangeCost = this.onChangeCost.bind(this);
+        this.onChangeExpiration = this.onChangeExpiration.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
     }
 
     onChangeRetail(e) {
@@ -33,6 +38,9 @@ export default class CreateProduct extends Component {
 
     onSubmit(e) {
         e.preventDefault();
+
+        const stateCopy = this.state;
+        axios.post(config.API_URL + "/products/create", stateCopy).then(res => console.log(res.data));
 
         this.resetState();
     }
