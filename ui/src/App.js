@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import logo from "./logo.svg"
@@ -36,9 +36,15 @@ class App extends Component {
 
   updateUserData(self){
     console.log("Updating user data")
-    axios.post(config.API_URL + "/users/data", {token: localStorage.getItem("token")}).then(res=>{
-      self.setState({userData:res.data});
-    })
+    var token = localStorage.getItem("token");
+
+    if(token){
+      axios.post(config.API_URL + "/users/data", {token: token}).then(res=>{
+        self.setState({userData:res.data});
+      })
+    }else{
+      self.setState({userData: null});
+    }
   }
 
   render() {
@@ -50,6 +56,14 @@ class App extends Component {
               <Link to={props.to} className="nav-link">{props.name}</Link>
             </li>
         )
+    }
+
+    function Logout(props) {
+      localStorage.removeItem("token");
+      window.dispatchEvent(new Event("userChanged"));
+      return (
+        <Redirect to="/login"></Redirect>
+      )
     }
 
     const userData = this.state.userData;
@@ -79,10 +93,17 @@ class App extends Component {
                   <NavButton to="/management" name="Management" condition={userData.management}/>
                   </>
                 }
-
-                <li className="navbar-item">
-                  <Link to="/login" className="nav-link">Login</Link>
-                </li>
+                {!userData &&
+                  <li className="navbar-item">
+                    <Link to="/login" className="nav-link">Login</Link>
+                  </li>
+                }
+                {
+                  userData &&
+                  <li className="navbar-item">
+                    <Link to="/logout" className="nav-link">Logout</Link>
+                  </li>
+                }
               </ul>
             </div>
           </nav>
@@ -98,6 +119,8 @@ class App extends Component {
           <Route path="/receipt" component={Receipt}/>
           <Route path="/management" component={CreateUser}/>
           <Route path="/login" component={Login}/>
+          <Route path="/logout" component={Logout}/>
+
         </div>
       </Router>
     );
