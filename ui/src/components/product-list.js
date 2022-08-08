@@ -28,7 +28,7 @@ export default class ProductList extends Component {
     }
 
     componentDidMount(){
-        axios.get(config.API_URL+"/products/").then( response => {
+        axios.get(config.API_URL+"/products/", config={headers:{"x-access-token": localStorage.getItem("token")}}).then( response => {
                 this.setState({products: response.data});
             }
         ).catch(function(error){

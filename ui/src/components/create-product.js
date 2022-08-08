@@ -40,9 +40,9 @@ export default class CreateProduct extends Component {
         e.preventDefault();
 
         const stateCopy = this.state;
-        axios.post(config.API_URL + "/products/create", stateCopy).then(res => console.log(res.data));
-
-        this.resetState();
+        axios.post(config.API_URL + "/products/create", stateCopy, config={headers:{"x-access-token": localStorage.getItem("token")}}).then(function(res){
+            if(res.status == 200) this.resetState();
+        });
     }
 
     render(){

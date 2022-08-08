@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const PORT = 25565;
 
+const auth = require("./auth.js")
+
 var config = require("./config")
 
 app.use(cors());
@@ -19,8 +21,10 @@ connection.once('open', function() {
 })
 
 let productsRoute = require("./products.js")
+let userRoute = require("./users.js")
 
-app.use("/products", productsRoute);
+app.use("/products", [new auth.AuthRequirement("product").verifyJWT, productsRoute]);
+app.use("/users", userRoute);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

@@ -10,11 +10,12 @@ import ProductList from "./components/product-list";
 import Credit from "./components/credit.js"
 import Customer from "./components/customer.js"
 import Inventory from "./components/inventory.js"
-import Management from "./components/management.js"
+import CreateUser from "./components/create-user.js"
 import Purchasing from "./components/purchasing.js"
 import Receipt from "./components/receipt.js"
 import Recieving from "./components/recieving.js"
 import Sales from "./components/sales.js"
+import Login from "./components/login.js"
 
 class App extends Component {
   render() {
@@ -61,6 +62,9 @@ class App extends Component {
                 <li className="navbar-item">
                   <Link to="/management" className="nav-link">User Management</Link>
                 </li>
+                <li className="navbar-item">
+                  <Link to="/login" className="nav-link">Login</Link>
+                </li>
               </ul>
             </div>
           </nav>
@@ -74,7 +78,8 @@ class App extends Component {
           <Route path="/customer" component={Customer}/>
           <Route path="/inventory" component={Inventory}/>
           <Route path="/receipt" component={Receipt}/>
-          <Route path="/management" component={Management}/>
+          <Route path="/management" component={CreateUser}/>
+          <Route path="/login" component={Login}/>
         </div>
       </Router>
     );
