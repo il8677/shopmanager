@@ -23,7 +23,6 @@ route.post("/login", (req, res) => {
                             id: user.id,
                             username: user.username
                         }
-
                         jwt.sign(
                             payload,
                             process.env.JWT_SECRET,
@@ -48,6 +47,7 @@ route.post("/data", (req, res) => {
         id = Auth.getIDFromJWT(jwtToken);
         if(id){ 
             Auth.getUserAccesses(id).then(accesses => {
+                console.log(accesses);
                 if(!accesses){
                     res.status(401).json({message: "Token has invalid ID"});
                     return;

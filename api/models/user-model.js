@@ -10,18 +10,17 @@ let User = new Schema({
         type: String,
         required: true
     },
-    accesses: {type: {
-        product: {type: Boolean, default: false},
-        recieving: {type: Boolean, default: false},
-        sales: {type: Boolean, default: false},
-        cash: {type: Boolean, default: false},
-        purchasing: {type: Boolean, default: false},
-        credit: {type: Boolean, default: false},
-        customer: {type: Boolean, default: false},
-        inventory: {type: Boolean, default: false},
-        receipt: {type: Boolean, default: false},
-        management: {type: Boolean, default: false},
-    }, required: true}
+    
+    product: {type: Boolean, default: false},
+    recieving: {type: Boolean, default: false},
+    sales: {type: Boolean, default: false},
+    cash: {type: Boolean, default: false},
+    purchasing: {type: Boolean, default: false},
+    credit: {type: Boolean, default: false},
+    customer: {type: Boolean, default: false},
+    inventory: {type: Boolean, default: false},
+    receipt: {type: Boolean, default: false},
+    management: {type: Boolean, default: false},
 })
 
 module.exports = mongoose.model("User", User);

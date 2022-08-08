@@ -5,14 +5,18 @@ let User = require("./models/user-model.js");
 async function userHasAccess(userID, accessCategory){
     return User.findById(userID).then((user, err) =>{
         if(!user) return false;
-        return user.accesses[accessCategory];
-    })
+        return user[accessCategory];
+    });
 }
 
 async function getUserAccesses(userID){
-    return User.findById(userID).then((user, err) => {
+    const query = User.findById(userID);
+    query.select("-password -username");
+    
+    return query.exec().then((user, err) => {
         if(!user) return;
-        return user.accesses;
+        console.log("Returning user");
+        return user;
     });
 }
 
@@ -44,7 +48,6 @@ class AuthRequirement{
                 req.user.username = decoded.username;
                 userHasAccess(decoded.id, this.accessCategory)
                 .then(hasAccess =>{
-                    console.log(hasAccess);
                     if(hasAccess) next();
                     else res.status(401).json({message: "No access", isLoggedIn: true});
                 })

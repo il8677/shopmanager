@@ -8,18 +8,16 @@ export default class CreateUser extends Component {
         this.state = {
             username: null,
             password: null,
-            accesses: {
-                product: false,
-                recieving: false,
-                sales: false,
-                cash: false,
-                purchasing: false,
-                credit: false,
-                customer: false,
-                inventory: false,
-                receipt: false,
-                management: false
-            },
+            product: false,
+            recieving: false,
+            sales: false,
+            cash: false,
+            purchasing: false,
+            credit: false,
+            customer: false,
+            inventory: false,
+            receipt: false,
+            management: false.valueOf,
             errorMessage: null
         }
     }
@@ -55,70 +53,52 @@ export default class CreateUser extends Component {
     }
 
     onProductChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.product = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({product: e.target.checked})
     }
 
     onRecievingChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.recieving = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({recieving: e.target.checked})
     }
 
     onSalesChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.sales = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({sales: e.target.checked})
     }
 
     onCashChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.cash = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({cash: e.target.checked})
     }
 
     onPurchasingChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.purchasing = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({purchasing: e.target.checked})
     }
 
     onCreditChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.credit = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({credit: e.target.checked})
     }
     
     onCustomerChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.customer = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({customer: e.target.checked})
     }
 
     onInventoryChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.inventory = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({inventory: e.target.checked})
     }
 
     onReceiptChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.receipt = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({receipt: e.target.checked})
     }
 
     onManagementChange(e){
-        var newAccesses = this.state.accesses;
-        newAccesses.management = e.target.checked;
-        this.setState({accesses: newAccesses})
+        this.setState({management: e.target.checked})
     }
 
     onSubmit(e){
         e.preventDefault()
 
+        const axiosConfig = {headers:{"x-access-token": localStorage.getItem("token")}};
+
         const stateCopy = this.state;
-        axios.post(config.API_URL + "/users/register", stateCopy).then(res => {
+        axios.post(config.API_URL + "/management/register", stateCopy, axiosConfig).then(res => {
                 localStorage.setItem("token", res.data.token);
                 this.setState({errorMessage: "Success"});
         }).catch(err => {

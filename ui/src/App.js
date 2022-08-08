@@ -19,6 +19,7 @@ import Login from "./components/login.js"
 import axios from "axios";
 
 import config from "./config.json"
+import UserList from "./components/user-list";
 
 class App extends Component {
   constructor(props){
@@ -117,7 +118,8 @@ class App extends Component {
           <Route path="/customer" component={Customer}/>
           <Route path="/inventory" component={Inventory}/>
           <Route path="/receipt" component={Receipt}/>
-          <Route path="/management" component={CreateUser}/>
+          <Route path="/create_user" component={CreateUser}/>
+          <Route path="/management" component={UserList}/>
           <Route path="/logout" component={Logout}/>
 
           {!userData &&
