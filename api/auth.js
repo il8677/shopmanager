@@ -5,31 +5,22 @@ let User = require("./models/user-model.js");
 async function userHasAccess(userID, accessCategory){
     return User.findById(userID).then((user, err) =>{
         if(!user) return false;
-        console.log("User has access " + user.accesses[accessCategory])
         return user.accesses[accessCategory];
     })
 }
 
-function getUserAccesses(userID){
-    accesses = {};
-
-    User.findById(userID, function(err, user){
+async function getUserAccesses(userID){
+    return User.findById(userID).then((user, err) => {
         if(!user) return;
-
-        accesses = user.accesses;
+        return user.accesses;
     });
-
-    return accesses;
 }
 
 function getIDFromJWT(token){
     id = null;
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if(err) return;
-
-        id = decoded.id;
-    })
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    id = decoded.id;
 
     return id;
 

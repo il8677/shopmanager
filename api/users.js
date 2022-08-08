@@ -85,12 +85,20 @@ route.post("/data", (req, res) => {
     if(jwtToken){
         id = Auth.getIDFromJWT(jwtToken);
         if(id){ 
-            res.json(Auth.getUserAccesses(id));
-            return;
+            Auth.getUserAccesses(id).then(accesses => {
+                if(!accesses){
+                    res.status(401).json({message: "Token has invalid ID"});
+                    return;
+                }
+                res.json(accesses);
+            });
+        }else{
+            res.status(401).json({message: "Token has no ID"});
         }
+    }else{
+        res.status(401).json({message: "No token"});
     }
 
-    res.status(401).json({message: "Invalid token"});
 })
 
 module.exports = route;

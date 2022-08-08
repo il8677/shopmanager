@@ -16,9 +16,44 @@ import Receipt from "./components/receipt.js"
 import Recieving from "./components/recieving.js"
 import Sales from "./components/sales.js"
 import Login from "./components/login.js"
+import axios from "axios";
+
+import config from "./config.json"
 
 class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {userData: null}
+
+    const self = this;
+    window.addEventListener("userChanged", e => {this.updateUserData(self)})
+  }
+
+  componentDidMount(){
+    this.updateUserData(this);
+  }
+
+  updateUserData(self){
+    console.log("Updating user data")
+    axios.post(config.API_URL + "/users/data", {token: localStorage.getItem("token")}).then(res=>{
+      self.setState({userData:res.data});
+    })
+  }
+
   render() {
+
+    function NavButton(props) {
+      if(props.condition)
+        return (
+            <li className="navbar-item">
+              <Link to={props.to} className="nav-link">{props.name}</Link>
+            </li>
+        )
+    }
+
+    const userData = this.state.userData;
+
     return (
       <Router>
         <div className="container">
@@ -29,39 +64,22 @@ class App extends Component {
             <Link to="/" className="navbar-brand">Inventory Manager</Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
-                <li className="navbar-item">
-                  <Link to="/create" className="nav-link">Create Product</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/list" className="nav-link">Product List</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/recieving" className="nav-link">Recieving</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/sales" className="nav-link">Sales</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/cash" className="nav-link">Cash</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/purchasing" className="nav-link">Purchasing</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/credit" className="nav-link">Credit</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/customer" className="nav-link">Customer</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/inventory" className="nav-link">Inventory</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/receipt" className="nav-link">Receipt</Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/management" className="nav-link">User Management</Link>
-                </li>
+                { userData && 
+                  <>
+                  <NavButton to="/create" name="Create Product" condition={userData.product}/>
+                  <NavButton to="/list" name="Product List" condition={userData.product}/>
+                  <NavButton to="/recieving" name="Recieving" condition={userData.recieving}/>
+                  <NavButton to="/sales" name="Sales" condition={userData.sales}/>
+                  <NavButton to="/cash" name="Cash" condition={userData.cash}/>
+                  <NavButton to="/purchasing" name="Purchasing" condition={userData.purchasing}/>
+                  <NavButton to="/credit" name="Credit" condition={userData.credit}/>
+                  <NavButton to="/customer" name="Customer" condition={userData.customer}/>
+                  <NavButton to="/inventory" name="Inventory" condition={userData.inventory}/>
+                  <NavButton to="/receipt" name="Receipt" condition={userData.receipt}/>
+                  <NavButton to="/management" name="Management" condition={userData.management}/>
+                  </>
+                }
+
                 <li className="navbar-item">
                   <Link to="/login" className="nav-link">Login</Link>
                 </li>

@@ -34,8 +34,11 @@ export default class Login extends Component {
         const stateCopy = this.state;
         axios.post(config.API_URL + "/users/login", stateCopy).then(res =>{
             localStorage.setItem("token", res.data.token);
+            window.dispatchEvent(new Event("userChanged"));
+
             this.setState({errorMessage: res.data.message})
         }).catch(err => {
+            console.error(err);
             this.setState({errorMessage: err.response.data.message})
         });
     }
