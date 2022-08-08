@@ -22,9 +22,11 @@ connection.once('open', function() {
 
 let productsRoute = require("./products.js")
 let userRoute = require("./users.js")
+let managementRoute = require("./management.js")
 
 app.use("/products", [new auth.AuthRequirement("product").verifyJWT, productsRoute]);
-app.use("/users", [new auth.AuthRequirement("management").verifyJWT, userRoute]);
+app.use("/users", userRoute);
+app.use("/management", [new auth.AuthRequirement("management").verifyJWT, managementRoute]);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

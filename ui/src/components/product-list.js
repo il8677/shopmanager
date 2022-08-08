@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import config from "../config.json";
+const configData = require("../config.json");
 
 function formatDate(timestamp){
     let date = new Date(timestamp);
@@ -28,12 +28,15 @@ export default class ProductList extends Component {
     }
 
     componentDidMount(){
-        axios.get(config.API_URL+"/products/", config={headers:{"x-access-token": localStorage.getItem("token")}}).then( response => {
+        const endpointURL = configData.API_URL+"/products";
+        axios.get(endpointURL, {headers:{"x-access-token": localStorage.getItem("token")}}).then( response => {
                 this.setState({products: response.data});
             }
         ).catch(function(error){
             console.log(error);
         })
+
+        console.log(endpointURL);
     }
 
     getProducts(){
