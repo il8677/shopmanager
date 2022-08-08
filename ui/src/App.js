@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "./logo.svg"
 
 import Cash from "./components/cash.js"
-import CreateProduct from "./components/create-product.js"
+import CreateProduct from "./components/product-create.js"
 import ProductList from "./components/product-list";
 import Credit from "./components/credit.js"
 import Customer from "./components/customer.js"
