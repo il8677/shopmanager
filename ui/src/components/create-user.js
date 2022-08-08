@@ -99,7 +99,6 @@ export default class CreateUser extends Component {
 
         const stateCopy = this.state;
         axios.post(config.API_URL + "/management/register", stateCopy, axiosConfig).then(res => {
-                localStorage.setItem("token", res.data.token);
                 this.setState({errorMessage: "Success"});
         }).catch(err => {
             console.log(err.response.statusText);

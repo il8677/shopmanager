@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 const configData = require("../config.json");
@@ -172,6 +172,7 @@ export default class UserList extends Component {
     render(){
         return (<div>
             <h3>Users</h3>
+            <Link to="/create_user" type="button" class="btn btn-primary">Add User</Link>
             <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
