@@ -118,8 +118,15 @@ class App extends Component {
           <Route path="/inventory" component={Inventory}/>
           <Route path="/receipt" component={Receipt}/>
           <Route path="/management" component={CreateUser}/>
-          <Route path="/login" component={Login}/>
           <Route path="/logout" component={Logout}/>
+
+          {!userData &&
+            <Route path="/" component={Login}></Route>
+          }
+
+          {userData &&
+            <Route path="/login" component={Login}/>
+          }
 
         </div>
       </Router>
