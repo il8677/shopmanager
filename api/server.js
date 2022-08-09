@@ -20,11 +20,17 @@ connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
 
+let productsAuthRoute = require("./products-auth.js")
 let productsRoute = require("./products.js")
 let userRoute = require("./users.js")
+let recievingRoute = require("./recieving.js")
 let managementRoute = require("./management.js")
 
-app.use("/products", [new auth.AuthRequirement("product").verifyJWT, productsRoute]);
+app.use("/products", [new auth.AuthRequirement("product").verifyJWT, productsAuthRoute]);
+app.use("/productsData", productsRoute);
+
+app.use("/recieving", [new auth.AuthRequirement("recieving").verifyJWT, recievingRoute]);
+
 app.use("/users", userRoute);
 app.use("/management", [new auth.AuthRequirement("management").verifyJWT, managementRoute]);
 

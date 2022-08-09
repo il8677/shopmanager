@@ -6,6 +6,7 @@ import axios from "axios"
 export default class CreateProduct extends Component {
     getDefaultState(){
         return {
+            name: "",
             retail: 0,
             cost: 0,
             expiraton: Date.now()
@@ -17,11 +18,16 @@ export default class CreateProduct extends Component {
 
         this.state = this.getDefaultState();
 
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeRetail = this.onChangeRetail.bind(this);
         this.onChangeCost = this.onChangeCost.bind(this);
         this.onChangeExpiration = this.onChangeExpiration.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
+    }
+
+    onChangeName(e) {
+        this.setState({name: e.target.value});
     }
 
     onChangeRetail(e) {
@@ -42,7 +48,7 @@ export default class CreateProduct extends Component {
         const axiosConfig = {headers:{"x-access-token": localStorage.getItem("token")}};
 
         const stateCopy = this.state;
-        axios.post(config.API_URL + "/products/create", stateCopy, axiosConfig).then(function(res){
+        axios.post(config.API_URL + "/products/create", stateCopy, axiosConfig).then((res)=>{
             if(res.status == 200) this.setState(this.getDefaultState());
         });
     }
@@ -52,6 +58,10 @@ export default class CreateProduct extends Component {
             <div style={{marginTop: 10}}>
                 <h3>Create New Product</h3>
                 <form onSubmit={this.onSubmit}>
+                <div className='form-group'>
+                        <label>Name: </label>
+                        <input type="text" className="form-control" value={this.state.name} onChange={this.onChangeName} />
+                    </div>
                     <div className='form-group'>
                         <label>Retail Price: </label>
                         <input type="number" className="form-control" value={this.state.retailPrice} onChange={this.onChangeRetail} />

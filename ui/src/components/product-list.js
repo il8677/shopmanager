@@ -36,8 +36,6 @@ export default class ProductList extends Component {
         ).catch(function(error){
             console.log(error);
         })
-
-        console.log(endpointURL);
     }
 
     getProducts(){

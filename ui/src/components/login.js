@@ -31,6 +31,8 @@ export default class Login extends Component {
     onSubmit(e){
         e.preventDefault()
 
+        console.log("Login submit")
+
         const stateCopy = this.state;
         axios.post(config.API_URL + "/users/login", stateCopy).then(res =>{
             localStorage.setItem("token", res.data.token);
@@ -63,7 +65,7 @@ export default class Login extends Component {
                     <input type="submit" value="Login" className="btn btn-primary" />
                 </div>
             </form>
-            {this.state.errorMessage === "Success" ? <Navigate to="/"></Navigate>: null}
+            {this.state.errorMessage === "Success" ? <Navigate to="/" replace></Navigate>: null}
         </div>
 
         )

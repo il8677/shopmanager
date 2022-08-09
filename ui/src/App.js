@@ -13,7 +13,7 @@ import Inventory from "./components/inventory.js"
 import CreateUser from "./components/create-user.js"
 import Purchasing from "./components/purchasing.js"
 import Receipt from "./components/receipt.js"
-import Recieving from "./components/recieving.js"
+import ProductsTile from "./components/products-tile"
 import Sales from "./components/sales.js"
 import Login from "./components/login.js"
 import axios from "axios";
@@ -29,6 +29,8 @@ class App extends Component {
 
     const self = this;
     window.addEventListener("userChanged", e => {this.updateUserData(self)})
+
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount(){
@@ -48,6 +50,13 @@ class App extends Component {
     }
   }
 
+
+  logout() {
+    localStorage.removeItem("token");
+    window.dispatchEvent(new Event("userChanged"));
+    this.setState({redirect:"/"})
+  }
+
   render() {
 
     function NavButton(props) {
@@ -59,21 +68,18 @@ class App extends Component {
         )
     }
 
-    function Logout(props) {
-      localStorage.removeItem("token");
-      window.dispatchEvent(new Event("userChanged"));
-      return (
-        <Navigate to="/login"></Navigate>
-      )
-    }
-
     const userData = this.state.userData;
+
+    if(this.state.redirect){
+      this.setState({redirect: null});
+      return <Router><Navigate to={this.state.redirect} replace /></Router>
+    }
 
     return (
       <Router>
         <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" target="_blank">
+            <a className="navbar-brand" target="_blank">
               <img src={logo} width="30" height="30"/>
             </a>
             <Link to="/" className="navbar-brand">Inventory Manager</Link>
@@ -102,7 +108,7 @@ class App extends Component {
                 {
                   userData &&
                   <li className="navbar-item">
-                    <Link to="/logout" className="nav-link">Logout</Link>
+                    <button onClick={this.logout} className="nav-link">Logout</button>
                   </li>
                 }
               </ul>
@@ -111,7 +117,7 @@ class App extends Component {
           <Routes>
             <Route path="/create" element={<CreateProduct/>}/>
             <Route path="/list" element={<ProductList/>}/>
-            <Route path="/recieving" element={<Recieving/>}/>
+            <Route path="/recieving" element={<ProductsTile target="/recieving/"/>}/>
             <Route path="/sales" element={<Sales/>}/>
             <Route path="/cash" element={<Cash/>}/>
             <Route path="/purchasing" element={<Purchasing/>}/>
@@ -121,15 +127,13 @@ class App extends Component {
             <Route path="/receipt" element={<Receipt/>}/>
             <Route path="/create_user" element={<CreateUser/>}/>
             <Route path="/management" element={<UserList/>}/>
-            <Route path="/logout" element={<Logout/>}/>
 
             {!userData &&
               <Route path="/" element={<Login/>}></Route>
             }
-            {userData &&
-              <Route path="/login" element={<Login/>}/>
-            }
+            <Route path="/login" element={<Login/>}/>
         </Routes>
+
         </div>
       </Router>
     );

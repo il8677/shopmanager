@@ -15,7 +15,6 @@ async function getUserAccesses(userID){
     
     return query.exec().then((user, err) => {
         if(!user) return;
-        console.log("Returning user");
         return user;
     });
 }

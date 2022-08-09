@@ -54,7 +54,6 @@ route.route("/update_access/:id").post(async (req, res)=> {
         if(!user) res.status(404).send("data not found");
         else{
             res.status(200).json({message: "product updated"})
-            console.log(user);
         }
     })
 })
