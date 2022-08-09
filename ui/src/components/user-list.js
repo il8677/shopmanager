@@ -5,12 +5,6 @@ import axios from 'axios';
 
 const configData = require("../config.json");
 
-function formatDate(timestamp){
-    let date = new Date(timestamp);
-
-    return date.getDate() + "/" + date.getMonth()+1 + "/" + date.getFullYear();
-}
-
 class UserEntry extends Component{
     constructor(props){
         super(props);
@@ -32,6 +26,14 @@ class UserEntry extends Component{
         this.inventoryUpdate = this.inventoryUpdate.bind(this);
         this.receiptUpdate = this.receiptUpdate.bind(this);
         this.managementUpdate = this.managementUpdate.bind(this);
+
+        this.delete = this.delete.bind(this);
+    }
+
+    delete(){
+        const axiosConfig = {headers:{"x-access-token": localStorage.getItem("token")}};
+
+        axios.get(configData.API_URL + "/management/delete/" + this.userID, axiosConfig);
     }
 
     productUpdate(e){
@@ -140,6 +142,7 @@ class UserEntry extends Component{
             <td><input type="checkbox" className="form-check-input" checked={this.state.inventory} onChange={this.inventoryUpdate} /></td>
             <td><input type="checkbox" className="form-check-input" checked={this.state.receipt} onChange={this.receiptUpdate} /></td>
             <td><input type="checkbox" className="form-check-input" checked={this.state.management} onChange={this.managementUpdate} /></td>
+            <td><button className="btn btn-danger" onClick={this.delete}>Delete</button> </td>
         </tr>
         )
     }
@@ -177,16 +180,17 @@ export default class UserList extends Component {
                     <thead>
                         <tr>
                             <th>Username</th>
-                            <th>Product</th>
-                            <th>Recieving</th>
-                            <th>Sales</th>
-                            <th>Cash</th>
-                            <th>Purchasing</th>
-                            <th>Credit</th>
-                            <th>Customer</th>
-                            <th>Inventory</th>
-                            <th>Receipt</th>
-                            <th>Management</th>
+                            <th>PRD</th>
+                            <th>RECV</th>
+                            <th>SALE</th>
+                            <th>CSH</th>
+                            <th>PUR</th>
+                            <th>CRE</th>
+                            <th>CUS</th>
+                            <th>INV</th>
+                            <th>RCPT</th>
+                            <th>MNGT</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

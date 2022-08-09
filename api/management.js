@@ -59,7 +59,7 @@ route.route("/update_access/:id").post(async (req, res)=> {
     })
 })
 
-route.post("/delete/:id", (req, res) => {
+route.get("/delete/:id", (req, res) => {
     let id = req.params.id;
 
     User.findByIdAndDelete(id, function(err, user){
