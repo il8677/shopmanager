@@ -13,6 +13,7 @@ function formatDate(timestamp){
 
 const Product = props => (
     <tr>
+        <td>{props.product.name}</td>
         <td>{props.product.retail}</td>
         <td>{props.product.cost}</td>
         <td>{props.product.retail - props.product.cost}</td>
@@ -51,6 +52,7 @@ export default class ProductList extends Component {
             <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Retail</th>
                             <th>Cost</th>
                             <th>Margin</th>
