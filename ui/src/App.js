@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import logo from "./logo.svg"
@@ -63,7 +63,7 @@ class App extends Component {
       localStorage.removeItem("token");
       window.dispatchEvent(new Event("userChanged"));
       return (
-        <Redirect to="/login"></Redirect>
+        <Navigate to="/login"></Navigate>
       )
     }
 
@@ -108,28 +108,28 @@ class App extends Component {
               </ul>
             </div>
           </nav>
-          <Route path="/create" component={CreateProduct}/>
-          <Route path="/list" component={ProductList}/>
-          <Route path="/recieving" component={Recieving}/>
-          <Route path="/sales" component={Sales}/>
-          <Route path="/cash" component={Cash}/>
-          <Route path="/purchasing" component={Purchasing}/>
-          <Route path="/credit" component={Credit}/>
-          <Route path="/customer" component={Customer}/>
-          <Route path="/inventory" component={Inventory}/>
-          <Route path="/receipt" component={Receipt}/>
-          <Route path="/create_user" component={CreateUser}/>
-          <Route path="/management" component={UserList}/>
-          <Route path="/logout" component={Logout}/>
+          <Routes>
+            <Route path="/create" element={<CreateProduct/>}/>
+            <Route path="/list" element={<ProductList/>}/>
+            <Route path="/recieving" element={<Recieving/>}/>
+            <Route path="/sales" element={<Sales/>}/>
+            <Route path="/cash" element={<Cash/>}/>
+            <Route path="/purchasing" element={<Purchasing/>}/>
+            <Route path="/credit" element={<Credit/>}/>
+            <Route path="/customer" element={<Customer/>}/>
+            <Route path="/inventory" element={<Inventory/>}/>
+            <Route path="/receipt" element={<Receipt/>}/>
+            <Route path="/create_user" element={<CreateUser/>}/>
+            <Route path="/management" element={<UserList/>}/>
+            <Route path="/logout" element={<Logout/>}/>
 
-          {!userData &&
-            <Route path="/" component={Login}></Route>
-          }
-
-          {userData &&
-            <Route path="/login" component={Login}/>
-          }
-
+            {!userData &&
+              <Route path="/" element={<Login/>}></Route>
+            }
+            {userData &&
+              <Route path="/login" element={<Login/>}/>
+            }
+        </Routes>
         </div>
       </Router>
     );

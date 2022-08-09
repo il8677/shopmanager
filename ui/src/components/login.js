@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component, useLayoutEffect, useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, Navigate, useHistory } from 'react-router-dom'
 
 import config from "../config.json"
 
@@ -63,7 +63,7 @@ export default class Login extends Component {
                     <input type="submit" value="Login" className="btn btn-primary" />
                 </div>
             </form>
-            {this.state.errorMessage === "Success" ? <Redirect to="/"></Redirect>: null}
+            {this.state.errorMessage === "Success" ? <Navigate to="/"></Navigate>: null}
         </div>
 
         )
