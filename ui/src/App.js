@@ -16,6 +16,9 @@ import Receipt from "./components/receipt.js"
 import ProductsTile from "./components/products-tile"
 import Sales from "./components/sales.js"
 import Login from "./components/login.js"
+
+import Recieving from "./components/recieving.js"
+
 import axios from "axios";
 
 import config from "./config.json"
@@ -117,7 +120,10 @@ class App extends Component {
           <Routes>
             <Route path="/create" element={<CreateProduct/>}/>
             <Route path="/list" element={<ProductList/>}/>
+
             <Route path="/recieving" element={<ProductsTile target="/recieving/"/>}/>
+            <Route path="/recieving/:id" element={<Recieving />} />
+
             <Route path="/sales" element={<Sales/>}/>
             <Route path="/cash" element={<Cash/>}/>
             <Route path="/purchasing" element={<Purchasing/>}/>

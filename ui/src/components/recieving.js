@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { useParams } from "react-router";
 
-export default class Recieving extends Component {
-    render(){
-        return (
-            <div>
-                <p>Hi</p>
-            </div>
-        )
-    }
+export default function Recieving () {
+    let { id } = useParams();
+    return (
+    <div>
+        
+    </div>
+    )
 }
