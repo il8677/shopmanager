@@ -2,26 +2,23 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Recieving from './recieving';
 
 const configData = require("../config.json");
 
-const Product = props => (
-    <Link to={props.target + props.product._id} style={{all:"unset"}}>
-        <div className="card" style={{margin: 10+"px", width: 100+"px", height: 100+"px"}}>
-            <div className="card-body d-flex align-items-center">
-                <p className="card-title">{props.product.name}</p>
-            </div>
-        </div>
-    </Link>
-)
+
 
 export default class ProductsTile extends Component {
     constructor(props){
         super(props);
 
-        this.state = {products: []};
-        this.buttonTarget = props.target;
+        this.state = {products: [],
+                     editComponent: null};
         this.doRender = false;
+        
+        this.targetComponent = props.target;
+
+        
     }
 
     componentDidMount(){
@@ -37,17 +34,44 @@ export default class ProductsTile extends Component {
     }
 
     getProducts(){
-        return this.state.products.map((product, i)=>{
-            return <Product product={product} key = {i} target={this.buttonTarget}/>
+
+        const setEditComponent = (product) => {
+            this.setState({editComponent: <Recieving id={product._id} name={product.name} />});
+        }
+
+        const Product = props => (
+                <div onClick={e=>setEditComponent(props.product)} className="card" style={{margin: 10+"px", width: 100+"px", height: 100+"px"}}>
+                    <div className="card-body d-flex align-items-center">
+                        <p className="card-title">{props.product.name}</p>
+                    </div>
+                </div>
+        )
+
+        const productMap = this.state.products.map((product, i)=>{
+            return <Product product={product} key = {i} target={this.targetComponent}/>
         })
+
+        const editComponent = this.state.editComponent;
+
+        return (
+            <div>
+
+            {editComponent &&
+                <div>
+                {editComponent}
+                </div>}
+            <div className="row row-cols-auto">
+                
+                {productMap}
+            </div>
+            </div>
+        )
     }
 
     render(){
         return (<div>
             <h3>Products</h3>
-            <div className="row row-cols-auto">
-                {this.doRender && this.getProducts()}
-            </div>
+            {this.doRender && this.getProducts()}
         </div>)
     }
 }

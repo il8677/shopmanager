@@ -121,8 +121,7 @@ class App extends Component {
             <Route path="/create" element={<CreateProduct/>}/>
             <Route path="/list" element={<ProductList/>}/>
 
-            <Route path="/recieving" element={<ProductsTile target="/recieving/"/>}/>
-            <Route path="/recieving/:id" element={<Recieving />} />
+            <Route path="/recieving" element={<ProductsTile target={Recieving}/>}/>
 
             <Route path="/sales" element={<Sales/>}/>
             <Route path="/cash" element={<Cash/>}/>

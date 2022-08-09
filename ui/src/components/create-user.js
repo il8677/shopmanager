@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 
+import StatusMessage from './statusMessage';
+
 import config from "../config.json"
 
 export default class CreateUser extends Component {
@@ -113,9 +115,7 @@ export default class CreateUser extends Component {
             <div style={{marginTop: 10}}>
             <h3>Create New User</h3>
             <form onSubmit={this.onSubmit}>
-                {this.state.errorMessage && <div class="alert alert-danger" role="alert">
-                    {this.state.errorMessage}    
-                </div>}
+                {this.state.errorMessage && <StatusMessage message={this.state.errorMessage} />}
                 <div className='form-group'>
                     <label>Username: </label>
                     <input type="text" className="form-control" value={this.state.username} onChange={this.onUsernameChange} />
