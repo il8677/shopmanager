@@ -4,8 +4,8 @@ import config from "../config.json"
 import axios from "axios"
 
 export default class CreateProduct extends Component {
-    resetState(){
-        this.state = {
+    getDefaultState(){
+        return {
             retail: 0,
             cost: 0,
             expiraton: Date.now()
@@ -15,7 +15,7 @@ export default class CreateProduct extends Component {
     constructor(props) {
         super(props);
 
-        this.resetState();
+        this.state = this.getDefaultState();
 
         this.onChangeRetail = this.onChangeRetail.bind(this);
         this.onChangeCost = this.onChangeCost.bind(this);
@@ -43,7 +43,7 @@ export default class CreateProduct extends Component {
 
         const stateCopy = this.state;
         axios.post(config.API_URL + "/products/create", stateCopy, axiosConfig).then(function(res){
-            if(res.status == 200) this.resetState();
+            if(res.status == 200) this.setState(this.getDefaultState());
         });
     }
 

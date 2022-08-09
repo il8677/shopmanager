@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import config from "../config.json"
 
 export default class CreateUser extends Component {
-    resetState(){
-        this.state = {
+    getDefaultState(){
+        return {
             username: null,
             password: null,
             product: false,
@@ -25,7 +25,7 @@ export default class CreateUser extends Component {
     constructor(props) {
         super(props);
 
-        this.resetState()
+        this.state = this.getDefaultState()
 
         this.onUsernameChange = this.onUsernameChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
